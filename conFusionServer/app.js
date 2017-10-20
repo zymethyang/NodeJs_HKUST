@@ -11,6 +11,21 @@ var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
 
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
+const Dishes = require('./models/dishes');
+
+// Connection URL
+const url = 'mongodb://localhost:27017/conFusion';
+const connect = mongoose.connect(url, {
+  useMongoClient: true,
+  /* other options */
+});
+
+connect.then((db) => {
+  console.log("Connected correctly to server");
+}, (err) => { console.log(err); });
 
 var app = express();
 
@@ -28,19 +43,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/dishes',dishRouter);
-app.use('/promotions',promoRouter);
-app.use('/leaders',leaderRouter);
+app.use('/dishes', dishRouter);
+app.use('/promotions', promoRouter);
+app.use('/leaders', leaderRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
