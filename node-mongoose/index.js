@@ -14,13 +14,34 @@ connect.then((db) => {
         name: 'Uthappizza',
         description: 'test'
     });
-    newDish.save()
+    Dishes.create({
+        name: 'Uthappizza',
+        description: 'test'
+    })
         .then((dish) => {
             console.log(dish);
-            return Dishes.find({}).exec();
+
+            return Dishes.findByIdAndUpdate(dish._id, {
+                $set: { description: 'Updated test' }
+            }, {
+                    new: true
+                })
+                .exec();
         })
-        .then((dishes) => {
-            console.log(dishes);
+        .then((dish) => {
+            console.log(dish);
+
+            dish.comments.push({
+                rating: 5,
+                comment: 'I\'m getting a sinking feeling!',
+                author: 'Leonardo di Carpaccio'
+            });
+
+            return dish.save();
+        })
+        .then((dish) => {
+            console.log(dish);
+
             return db.collection('dishes').drop();
         })
         .then(() => {
