@@ -19,7 +19,7 @@ var commentSchema = new Schema({
     author: {
         type: String,
         required: true
-    }
+    },
 }, {
         timestamps: true
     });
@@ -29,6 +29,26 @@ var dishSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    image:{
+        type:String,
+        required:true
+    },
+    category:{
+        type:String,
+        required:true
+    },
+    label:{
+        type:String,
+        required:true
+    },
+    price:{
+        type:Currency,
+        required:true
+    },
+    featured:{
+        type:Boolean,
+        required:true
     },
     description: {
         type: String,
