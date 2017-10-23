@@ -12,12 +12,12 @@ var users = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
-
+var favoritesRouter = require('./routes/favoritesRouter')
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 const Dishes = require('./models/dishes');
-
+const uploadRouter = require('./routes/uploadRouter');
 // Connection URL
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
@@ -54,6 +54,8 @@ app.use('/users', users);
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
+app.use('/favorites', favoritesRouter);
+app.use('/imageUpload',uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
